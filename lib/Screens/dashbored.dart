@@ -3,7 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:medsapp_project/Screens/Donate_medicine_form.dart';
+import 'package:medsapp_project/Screens/about_us.dart';
+//import 'package:medsapp_project/Screens/Donate_medicine_form.dart';
+import 'package:medsapp_project/Screens/altervatives.dart';
 import 'package:medsapp_project/Screens/chat_screen.dart';
 import 'package:medsapp_project/Screens/header_drawer.dart';
 import 'package:medsapp_project/Screens/medicine_donation_form.dart';
@@ -59,14 +61,18 @@ class _DashboredState extends State<Dashbored> {
             ),
             ListTile(
               leading: const Icon(Icons.add_box_rounded),
-              title: const Text('DonateMedicine'),
-              onTap: () {},
+              title: const Text('About Us'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return AboutUs();
+                }));
+              },
             ),
-            ListTile(
-              leading: const Icon(Icons.help_center),
-              title: const Text('NeedMedicine'),
-              onTap: () {},
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.help_center),
+            //   title: const Text('NeedMedicine'),
+            //   onTap: () {},
+            // ),
             ListTile(
               leading: const Icon(Icons.logout_sharp),
               title: const Text('Logout'),
@@ -159,7 +165,7 @@ class _DashboredState extends State<Dashbored> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DonateMedicine()));
+                              builder: (context) => MedicineSearchScreen()));
                     },
                   ),
                 ),
@@ -208,14 +214,14 @@ class _DashboredState extends State<Dashbored> {
             label: 'Home',
             // backgroundColor: Colors.blue
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.health_and_safety,
-            ),
-            label: 'Donate',
+          // BottomNavigationBarItem(
+          //   icon: Icon(
+          //     Icons.health_and_safety,
+          //   ),
+          //   label: '',
 
-            //backgroundColor: Colors.blue
-          ),
+          //   //backgroundColor: Colors.blue
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Setting',
