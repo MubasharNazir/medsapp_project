@@ -14,7 +14,11 @@ class MedicineDetailsScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
-          title: Text('Medicine Details'),
+          title: Text('Medicine Details',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                color: Color(0xffF50057),
+              )),
         ),
         body: Padding(
           padding: const EdgeInsets.all(25.0),
@@ -28,12 +32,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Medicine Name:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineName,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -47,12 +51,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Medicine Type:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineType.toString().trim(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -66,12 +70,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Medicine Expiry Date:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineExpiryDate.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -85,12 +89,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Medicine Condition:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineCondition.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -104,12 +108,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Medicine Quantity:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineQuantity.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -123,12 +127,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Size in mg/ml:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineDescription.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -142,12 +146,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Address :',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
-                      SizedBox(width: 30.0), // Adjust the spacing as needed
+                      //SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.medicineAddress.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),
@@ -161,12 +165,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Contact No:',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                       SizedBox(width: 30.0), // Adjust the spacing as needed
                       Text(
                         medicine.phoneNumber.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       ),
                     ],
                   ),

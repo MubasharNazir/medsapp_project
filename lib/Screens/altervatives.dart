@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Medicine1 {
+class Medicine {
   final String? id;
-  String? name;
-  String? activeIngredient;
-  //final String size;
+  final String name;
+  final String activeIngredient;
 
-  Medicine1({
+  Medicine({
     this.id,
-    this.name,
-    this.activeIngredient,
-    //required this.size,
+    required this.name,
+    required this.activeIngredient,
   });
 
-  factory Medicine1.fromSnapshot(
+  factory Medicine.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
-    return Medicine1(
+    return Medicine(
       id: document.id,
       name: data['name'],
       activeIngredient: data['activeIngredient'],
-      // size: data['size'],
     );
   }
 }
@@ -33,16 +30,33 @@ class MedicineSearchScreen extends StatefulWidget {
 
 class _MedicineSearchScreenState extends State<MedicineSearchScreen> {
   TextEditingController _searchController = TextEditingController();
-  List<Medicine1> _alternativeMedicines = [];
+  List<Medicine> _alternativeMedicines = [];
 
-  Future<void> _searchMedicine() async {
-    String searchedMedicineName = _searchController.text.trim().toLowerCase();
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
 
-    if (searchedMedicineName.isNotEmpty) {
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    _searchMedicine(_searchController.text.trim().toLowerCase());
+  }
+
+  Future<void> _searchMedicine(String searchTerm) async {
+    if (searchTerm.isNotEmpty) {
       try {
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('medicines')
-            .where('name', isEqualTo: searchedMedicineName)
+            .where('name', isGreaterThanOrEqualTo: searchTerm.toLowerCase())
+            .where('name', isLessThan: searchTerm + 'z')
+            //.where('name', isEqualTo: searchTerm)
             .get();
 
         if (querySnapshot.docs.isNotEmpty) {
@@ -51,21 +65,16 @@ class _MedicineSearchScreenState extends State<MedicineSearchScreen> {
 
           QuerySnapshot alternativeSnapshot = await FirebaseFirestore.instance
               .collection('medicines')
-              //.where('name', isNotEqualTo: searchedMedicineName)
               .where('activeIngredient', isEqualTo: activeIngredient)
               .get();
 
           setState(() {
-            // _alternativeMedicines = alternativeSnapshot.docs.map((data) {
-            //   return Medicine.fromSnapshot(
-            //       data as DocumentSnapshot<Map<String, dynamic>>);
-            // }).toList();
             _alternativeMedicines = alternativeSnapshot.docs
-                .map((data) => Medicine1.fromSnapshot(
+                .map((data) => Medicine.fromSnapshot(
                     data as DocumentSnapshot<Map<String, dynamic>>))
                 .toList();
             _alternativeMedicines.removeWhere(
-                (medicine) => medicine.name == searchedMedicineName);
+                (medicine) => medicine.name == searchTerm.toLowerCase().trim());
           });
         } else {
           setState(() {
@@ -82,57 +91,111 @@ class _MedicineSearchScreenState extends State<MedicineSearchScreen> {
     }
   }
 
+  void _selectSuggestion(Medicine medicine) {
+    setState(() {
+      _searchController.text = medicine.name.toLowerCase().trim();
+      _alternativeMedicines
+          .clear(); // Clear the suggestion list when a suggestion is selected.
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Color(0xffF50057),
         title: Text(
           'Check Alternative Here',
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(fontFamily: 'Poppins'
+              // color: Colors.white,
+              ),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                  hintText: 'Search Medicine',
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              child: TextField(
+                style: TextStyle(fontFamily: 'Poppins'),
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Find Alternative',
+                  // filled: true,
+                  //fillColor: Colors.grey.shade100,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: _searchMedicine,
-                    // color: Colors.white,
+                    onPressed: () {
+                      _searchMedicine(
+                          _searchController.text.trim().toLowerCase());
+                    },
                   ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide.none)),
+                  // border: OutlineInputBorder(
+                  //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  //   borderSide: BorderSide.none,
+                  // ),
+                ),
+              ),
             ),
-            SizedBox(height: 16),
-            Text(
-              'Alternative Medicines:',
-              //textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+            SizedBox(height: 5),
+            // Text(
+            //   'Alternative Medicines:',
+            //   style: TextStyle(
+            //     fontSize: 18,
+            //     fontWeight: FontWeight.bold,
+            //     //color: Colors.black87,
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Important Note:',
+                  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Before Using Any Alternative,\nFirst Concerned with Doctors',
+                  style: TextStyle(
+                      fontFamily: 'Poppins', fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: _alternativeMedicines.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_alternativeMedicines[index].name.toString()),
-                    subtitle: Text(_alternativeMedicines[index]
-                        .activeIngredient
-                        .toString()),
+              child: ListView(
+                children: _alternativeMedicines.map((medicine) {
+                  return InkWell(
+                    onTap: () {
+                      _selectSuggestion(medicine);
+                      // Implement the action you want to perform when the suggestion is selected
+                      print('Selected: ${medicine.name}');
+                      // You can use the selected medicine as needed.
+                    },
+                    child: ListTile(
+                      title: Text(
+                        medicine.name,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      subtitle: Text(
+                          'activeIngredient:  ${medicine.activeIngredient}'),
+                    ),
                   );
-                },
+                }).toList(),
               ),
             ),
           ],

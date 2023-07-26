@@ -27,11 +27,18 @@ class _SignUPState extends State<SignUP> {
     // double w = MediaQuery.of(context).size.width;
     //double h = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffF50057),
+        title: Text(
+          'MeDsApp',
+          style: TextStyle(fontFamily: 'Poppins'),
+        ),
+      ),
       body: Form(
         key: _formkey,
         child: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(left: 25, right: 25, top: 100, bottom: 0),
+            margin: EdgeInsets.only(left: 25, right: 25, top: 80, bottom: 0),
             child: Column(children: [
               Container(
                 margin: EdgeInsets.only(right: 0.65),
@@ -39,8 +46,9 @@ class _SignUPState extends State<SignUP> {
                   'SIGN UP',
                   style: TextStyle(
                       fontSize: 22,
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue),
+                      color: Color(0xffF50057)),
                 ),
               ),
               SizedBox(
@@ -48,6 +56,9 @@ class _SignUPState extends State<SignUP> {
               ),
               Container(
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
                   controller: firstNameController,
                   decoration: InputDecoration(
                       hintText: 'First Name',
@@ -67,6 +78,9 @@ class _SignUPState extends State<SignUP> {
               ),
               Container(
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
                   controller: secondNameController,
                   decoration: InputDecoration(
                       hintText: 'Second Name',
@@ -86,6 +100,9 @@ class _SignUPState extends State<SignUP> {
               ),
               Container(
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
                   controller: emailController,
                   decoration: InputDecoration(
                       hintText: 'Email',
@@ -110,6 +127,9 @@ class _SignUPState extends State<SignUP> {
               ),
               Container(
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
                   obscureText: true,
                   controller: passwordController,
                   decoration: InputDecoration(
@@ -124,7 +144,7 @@ class _SignUPState extends State<SignUP> {
                       return 'Enter the password';
                     }
                     if (!regex.hasMatch(value)) {
-                      return 'Enter the Valid Password';
+                      return 'Password must contain,capital,lower,and special characters also';
                     }
                     return null;
                   },
@@ -135,6 +155,9 @@ class _SignUPState extends State<SignUP> {
               ),
               Container(
                 child: TextFormField(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
                   obscureText: true,
                   controller: confirmPasswordController,
                   decoration: InputDecoration(
@@ -199,7 +222,7 @@ class _SignUPState extends State<SignUP> {
 
     await firebaseFirestore
         .collection('users')
-        .doc('user.uid')
+        .doc(user!.uid)
         .set(userModel.toMap());
 
     Fluttertoast.showToast(msg: 'Account Created Successfully');

@@ -4,14 +4,24 @@ class UserModel {
   String? firstName;
   String? secondName;
 
-  UserModel({this.uid, this.email, this.firstName, this.secondName});
+  // String? profilePictureUrl;
+
+  UserModel({
+    this.uid,
+    this.email,
+    this.firstName,
+    this.secondName,
+    //  this.profilePictureUrl = ''
+  });
 // receiving the data from firestore
   factory UserModel.fromMap(map) {
     return UserModel(
-        uid: map['uid'],
-        email: map['email'],
-        firstName: map['firstName'],
-        secondName: map['secondName']);
+      uid: map['uid'],
+      email: map['email'],
+      firstName: map['firstName'],
+      secondName: map['secondName'],
+      //  profilePictureUrl: map['profilePictureUrl']
+    );
   }
 // sending the data to firebase
   Map<String, dynamic> toMap() {

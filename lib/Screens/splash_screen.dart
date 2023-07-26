@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:medsapp_project/Screens/dashbored.dart';
+import 'package:medsapp_project/Screens/beautiful_cards.dart';
+//
+//import 'package:medsapp_project/Screens/dashbored.dart';
 //import 'package:medsapp_project/Screens/home_screen.dart';
 import 'package:medsapp_project/Screens/on_boarding_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,8 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: ((context) =>
-                    finalEmail == null ? OnboardingScreen() : Dashbored())));
+                builder: ((context) => finalEmail == null
+                    ? OnboardingScreen()
+                    : BeautifulCards())));
       });
     });
     super.initState();
@@ -35,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await SharedPreferences.getInstance();
     var obtainEmail = sharedPreferences.getString('email');
     setState(() {
-      finalEmail = obtainEmail!;
+      finalEmail = obtainEmail;
     });
     print('finalEmail');
   }
@@ -55,24 +58,29 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Center(
                 child: Stack(children: [
                   Image(
-                    image: AssetImage('assets/images/2.png.png'),
+                    image: AssetImage('assets/images/1.png'),
                   ),
                   Positioned(
                       top: height * 0.10,
                       left: width * 0.17,
                       child: Text(
                         'Donations',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            // color: Color(0xffF50057),
+                            fontFamily: 'Poppins'),
                       )),
                 ]),
               ),
             ),
             SizedBox(
-              height: height * 0.250,
+              height: height * 0.260,
             ),
             Text(
               'Welcome To MedsApp',
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 22,
+                  // color: Color(0xffF50057),
+                  fontFamily: 'Poppins'),
             )
           ],
         ),

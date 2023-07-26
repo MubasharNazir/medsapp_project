@@ -11,10 +11,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Color(0xffF50057),
       title: Text(
         'Flutter GPT',
         style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: Colors.white,
+          //  color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       actions: [

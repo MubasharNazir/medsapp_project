@@ -38,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         borderRadius: BorderRadius.all(
           Radius.circular(50),
         ),
-        color: Colors.blue,
+        color: Color(0xffF50057),
       ),
       margin: const EdgeInsets.only(right: 5),
       height: 10,
@@ -115,6 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
+                              fontFamily: 'Poppins',
                               fontSize: (width <= 550) ? 20 : 25,
                             ),
                           ),
@@ -123,6 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             contents[i].desc,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
+                              fontFamily: 'Poppins',
                               fontSize: (width <= 550) ? 14 : 16,
                             ),
                             textAlign: TextAlign.center,
@@ -155,15 +157,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             padding: const EdgeInsets.all(30),
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => LoginScreen()));
                               },
                               child: const Text("START",
-                                  style: TextStyle(color: Colors.white)),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                  )),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Color(0xffF50057),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
@@ -188,7 +193,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   },
                                   child: const Text(
                                     "SKIP",
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                    ),
                                   ),
                                   style: TextButton.styleFrom(
                                     elevation: 0,
@@ -208,19 +216,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   },
                                   child: const Text(
                                     "NEXT",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Poppins',
+                                    ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue,
+                                    //  backgroundColor: Colors.red,
+                                    backgroundColor: Color(0xffF50057),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     elevation: 0,
                                     padding: (width <= 550)
                                         ? const EdgeInsets.symmetric(
-                                            horizontal: 30, vertical: 20)
+                                            horizontal: 25, vertical: 20)
                                         : const EdgeInsets.symmetric(
-                                            horizontal: 30, vertical: 25),
+                                            horizontal: 25, vertical: 25),
                                     textStyle: TextStyle(
                                         fontSize: (width <= 550) ? 13 : 17),
                                   ),

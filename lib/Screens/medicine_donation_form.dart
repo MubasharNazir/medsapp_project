@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:medsapp_project/Screens/dashbored.dart';
 //import 'package:medsapp_project/Screens/dashbored.dart';
 //import 'package:medsapp_project/Models/medicine_form_model.dart';
 //import 'package:medsapp_project/Screens/login_screen1.dart';
@@ -51,8 +53,9 @@ class _DonationFormState extends State<DonationForm> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                'Location permission is required for Donate Medicine Form Please Allow Location permission')));
         return false;
       }
     }
@@ -79,7 +82,7 @@ class _DonationFormState extends State<DonationForm> {
   }
 
   Future<void> _getAddressFromLatLng(Position position) async {
-    await placemarkFromCoordinates(
+    await placemarkFromCoordinates!(
             _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
@@ -122,7 +125,14 @@ class _DonationFormState extends State<DonationForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Donation Form'),
+        backgroundColor: const Color(0xffF50057),
+        title: Text(
+          'Medicine Donation Form',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -132,8 +142,9 @@ class _DonationFormState extends State<DonationForm> {
               child: Column(
                 children: [
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(fontFamily: 'Poppins'),
                       controller: medicineName,
                       decoration: InputDecoration(
                         labelText: 'Medicine Name',
@@ -152,119 +163,125 @@ class _DonationFormState extends State<DonationForm> {
                     height: 20,
                   ),
                   Container(
-                      color: Colors.white,
+                      //color: Colors.white,
                       child: DropdownButtonFormField(
-                        value: _selectedValue1,
-                        hint: Text(
-                          'Medicine Type',
+                    // style: TextStyle(fontFamily: 'Poppins'),
+                    value: _selectedValue1,
+                    hint: Text(
+                      '  Medicine Type',
+                    ),
+                    isExpanded: true,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValue1 = value;
+                      });
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        _selectedValue1 = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "can't empty";
+                      } else {
+                        return null;
+                      }
+                    },
+                    items: listOfValue1.map((String val) {
+                      return DropdownMenuItem(
+                        value: val,
+                        child: Text(
+                          val,
                         ),
-                        isExpanded: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedValue1 = value;
-                          });
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _selectedValue1 = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "can't empty";
-                          } else {
-                            return null;
-                          }
-                        },
-                        items: listOfValue1.map((String val) {
-                          return DropdownMenuItem(
-                            value: val,
-                            child: Text(
-                              val,
-                            ),
-                          );
-                        }).toList(),
-                      )),
+                      );
+                    }).toList(),
+                  )),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                      color: Colors.white,
+                      //  color: Colors.white,
                       child: DropdownButtonFormField(
-                        value: _selectedValue,
-                        hint: Text(
-                          'Medicine Expiry Date',
+                    //  style: TextStyle(fontFamily: 'Poppins'),
+                    value: _selectedValue,
+                    hint: Text(
+                      '  Medicine Expiry Date',
+                    ),
+                    isExpanded: true,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValue = value;
+                      });
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        _selectedValue = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "can't empty";
+                      } else {
+                        return null;
+                      }
+                    },
+                    items: listOfValue.map((String val) {
+                      return DropdownMenuItem(
+                        value: val,
+                        child: Text(
+                          val,
                         ),
-                        isExpanded: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedValue = value;
-                          });
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _selectedValue = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "can't empty";
-                          } else {
-                            return null;
-                          }
-                        },
-                        items: listOfValue.map((String val) {
-                          return DropdownMenuItem(
-                            value: val,
-                            child: Text(
-                              val,
-                            ),
-                          );
-                        }).toList(),
-                      )),
+                      );
+                    }).toList(),
+                  )),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                      color: Colors.white,
+                      // color: Colors.white,
                       child: DropdownButtonFormField(
-                        value: _selectedValue2,
-                        hint: Text(
-                          'Medicine condition',
+                    // style: TextStyle(
+                    //     // fontFamily: 'Poppins'
+                    //     ),
+                    value: _selectedValue2,
+                    hint: Text(
+                      '  Medicine condition',
+                    ),
+                    isExpanded: true,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValue2 = value;
+                      });
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        _selectedValue2 = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "can't empty";
+                      } else {
+                        return null;
+                      }
+                    },
+                    items: listOfValue2.map((String val) {
+                      return DropdownMenuItem(
+                        value: val,
+                        child: Text(
+                          val,
                         ),
-                        isExpanded: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedValue2 = value;
-                          });
-                        },
-                        onSaved: (value) {
-                          setState(() {
-                            _selectedValue2 = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "can't empty";
-                          } else {
-                            return null;
-                          }
-                        },
-                        items: listOfValue2.map((String val) {
-                          return DropdownMenuItem(
-                            value: val,
-                            child: Text(
-                              val,
-                            ),
-                          );
-                        }).toList(),
-                      )),
+                      );
+                    }).toList(),
+                  )),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(fontFamily: 'Poppins'),
                       controller: medicineQuantity,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -287,13 +304,14 @@ class _DonationFormState extends State<DonationForm> {
                     height: 10,
                   ),
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(fontFamily: 'Poppins'),
                       controller: medicineDescription,
                       decoration: InputDecoration(
-                          hintText: 'enter medicine size in mg/ml',
+                          hintText: 'Enter medicine size in mg/ml',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(0),
                           )),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -308,8 +326,9 @@ class _DonationFormState extends State<DonationForm> {
                     height: 10,
                   ),
                   Container(
-                    color: Colors.white,
+                    // color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(fontFamily: 'Poppins'),
                       minLines: 3,
                       controller: medicineAddress,
                       maxLines: 4,
@@ -334,8 +353,9 @@ class _DonationFormState extends State<DonationForm> {
                     height: 10,
                   ),
                   Container(
-                    color: Colors.white,
+                    //color: Colors.white,
                     child: IntlPhoneField(
+                      style: TextStyle(fontFamily: 'Poppins'),
                       controller: phoneNumber,
                       decoration: InputDecoration(
                         hintText: 'Phone Number',
@@ -359,12 +379,16 @@ class _DonationFormState extends State<DonationForm> {
                           text: 'Submit Form',
                           onPressed: () async {
                             if (_formkey.currentState!.validate()) {
+                              final user = FirebaseAuth.instance.currentUser;
+                              final userID = user?.uid;
                               _getCurrentPosition();
                               Map<String, dynamic> donationmodel = {
                                 //'uid': uid,
-                                'userID': user?.uid,
-                                'medicineName':
-                                    medicineName.text.toString().trim(),
+                                'userID': userID.toString(),
+                                'medicineName': medicineName.text
+                                    .toString()
+                                    .trim()
+                                    .toLowerCase(),
                                 'medicineType':
                                     _selectedValue1.toString().trim(),
                                 'medicineExpiryDate':
@@ -387,6 +411,7 @@ class _DonationFormState extends State<DonationForm> {
 
                                 'address': _currentAddress.toString().trim(),
                               };
+                              //final userId = user?.uid;
 
                               await FirebaseFirestore.instance
                                   .collection('medicineinfo')
@@ -396,6 +421,12 @@ class _DonationFormState extends State<DonationForm> {
                               //
                               //
 
+                              Fluttertoast.showToast(
+                                  msg: 'Form Submit Successfullly');
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Dashbored();
+                              }));
                               setState(() {});
                             }
                           }))
