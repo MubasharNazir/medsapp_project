@@ -12,7 +12,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey.shade200,
+      color: Color(0xffF50057),
       width: double.infinity,
       height: 200,
       //padding: EdgeInsets.only(top: 20.0),
@@ -27,7 +27,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
                       image: AssetImage(
-                        'images/logo.jpg',
+                        'assets/images/good.png.png',
                       ),
                       fit: BoxFit.cover)),
             ),

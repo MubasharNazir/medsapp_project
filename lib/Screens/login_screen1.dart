@@ -3,10 +3,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:medsapp_project/Screens/dashbored.dart';
+import 'package:medsapp_project/Screens/beautiful_cards.dart';
+import 'package:medsapp_project/Screens/forget_screen.dart';
+//import 'package:medsapp_project/Screens/dashbored.dart';
+//import 'package:medsapp_project/Screens/home_screen.dart';
+//import 'package:medsapp_project/Screens/lets_go_screen.dart';
+import 'package:medsapp_project/widgets/custom_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/custom_button.dart';
+//import '../widgets/custom_button.dart';
 //import 'home_screen.dart';
 import 'signup_screen.dart';
 
@@ -29,6 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        //centerTitle: true,
+        backgroundColor: Color(0xffF50057),
+        title: Text(
+          '        MeDsApp',
+          style: TextStyle(fontFamily: 'Poppins', color: Colors.white),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         margin: EdgeInsets.only(top: h * 0.07, left: w * 0.07, right: w * 0.07),
@@ -54,9 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   height: 10,
                     // ),
                     Container(
-                      height: 250,
+                      height: 170,
                       child: Image.asset(
-                        'assets/images/logo2.png',
+                        'assets/images/7.png',
                       ),
                     ),
                     SizedBox(
@@ -66,11 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                         margin: EdgeInsets.only(right: 0.65),
                         child: Text(
-                          'LOGIN',
+                          'SIGN IN',
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffF50057),
+                            //color: Colors.black
+                          ),
                         ),
                       ),
                     ),
@@ -82,9 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   // color: Colors.grey.shade200,
                   child: TextFormField(
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                    ),
                     controller: emailController,
                     decoration: InputDecoration(
-                        hintText: 'email',
+                        hintText: 'Email',
                         // labelText: 'Email',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
@@ -107,10 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   //color: Colors.grey.shade200,
                   child: TextFormField(
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                    ),
                     controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                        hintText: 'password',
+                        hintText: 'Password',
                         // labelText: 'password',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
@@ -127,12 +149,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
+                Container(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                    child: Text(
+                      'Forget Password?',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Color(0xffF50057),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ForgotPasswordScreen();
+                      }));
+                    },
+                  ),
+                ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Container(
                   height: 50,
                   width: double.infinity,
+                  // color: Color(0xffF50057),
                   child: CustomButton(
                     // child: Text('Login'),
                     onPressed: () async {
@@ -142,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       sharedPreferences.setString(
                           'email', emailController.text);
                     },
-                    text: 'LOG IN',
+                    text: 'SIGN IN',
                   ),
                 ),
                 SizedBox(
@@ -151,7 +192,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   child: Row(
                     children: [
-                      Text('dont have an account?'),
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -162,7 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
-                                color: Colors.blue,
+                                color: Color(0xffF50057),
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.bold),
                           ))
                     ],
@@ -183,13 +230,15 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((uid) => {
                 Fluttertoast.showToast(msg: 'Login SuccessFully'),
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Dashbored()))
+                    MaterialPageRoute(builder: (context) => BeautifulCards()))
               })
           // ignore: body_might_complete_normally_catch_error
           .catchError((error) {
         Fluttertoast.showToast(msg: error!.message);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUP()));
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) {
+        //   return
+        // }));
       });
     }
   }
