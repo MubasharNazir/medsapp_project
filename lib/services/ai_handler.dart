@@ -3,7 +3,7 @@ import 'dart:core';
 
 class AIHandler {
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),

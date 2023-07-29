@@ -2,7 +2,7 @@
 //import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medsapp_project/Models/dashbored_model.dart';
 import 'package:medsapp_project/Screens/about_us.dart';
 //import 'package:medsapp_project/Screens/Donate_medicine_form.dart';
@@ -18,6 +18,7 @@ import 'package:medsapp_project/Screens/on_boarding_screens.dart';
 import 'package:medsapp_project/Screens/profile_page.dart';
 import 'package:medsapp_project/Screens/search_donations_here.dart';
 import 'package:medsapp_project/Screens/splash_screen.dart';
+import 'package:medsapp_project/constains/log_out.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:medsapp_project/Screens/signup_screen.dart';
 // import 'package:medecine_donation_app/screens/alternative_medicine.dart';
@@ -146,12 +147,8 @@ class _DashboredState extends State<Dashbored> {
                 style: TextStyle(fontFamily: 'Poppins'),
               ),
               onTap: () async {
-                _logout();
-
-                SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                sharedPreferences.clear();
-
+                LogOut logOut = LogOut();
+                logOut.logout();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginScreen()));
               },
@@ -395,68 +392,5 @@ class _DashboredState extends State<Dashbored> {
             ]),
       ),
     );
-  }
-
-  Future<void> _logout() async {
-    // Navigate to the login screen and remove all the routes
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => LoginScreen()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => Dashbored()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => AboutUs()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => ContactUsScreen()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => SplashScreen()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => LoginScreen()),
-      (route) => true,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => OnboardingScreen()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => BeautifulCards()),
-      (route) => false,
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => UserProfilePage()),
-      (route) => false,
-    );
-    //  Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (BuildContext context) => ()),
-    //   (route) => false,
-    // );
-    //  Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (BuildContext context) => ()),
-    //   (route) => false,
-    // );
-
-    // Clear any saved user data or tokens if needed
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
   }
 }

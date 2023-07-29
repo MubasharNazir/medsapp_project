@@ -187,11 +187,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medsapp_project/Models/user_model.dart';
 import 'package:medsapp_project/Screens/change_password.dart';
 import 'package:medsapp_project/Screens/login_screen1.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:medsapp_project/Screens/login_screen1.dart';
+import 'package:medsapp_project/constains/log_out.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
@@ -201,6 +203,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  LogOut logOut = LogOut();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -226,19 +229,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     } catch (e) {
       print("Error fetching user data: $e");
     }
-  }
-
-  Future<void> _logout() async {
-    // Clear any saved user data or tokens if needed
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
-
-    // Navigate to the login screen and remove all the routes
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => LoginScreen()),
-      (route) => false,
-    );
   }
 
   @override
@@ -295,8 +285,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.logout),
-                    onPressed: () async {
-                      _logout();
+                    onPressed: () {
+                      logOut.logout();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
                     },
                   ),
                   SizedBox(
